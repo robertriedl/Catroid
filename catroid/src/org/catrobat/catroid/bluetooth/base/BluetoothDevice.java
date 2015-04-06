@@ -23,6 +23,7 @@
 package org.catrobat.catroid.bluetooth.base;
 
 import org.catrobat.catroid.devices.arduino.phiro.Phiro;
+import org.catrobat.catroid.devices.mindstorms.ev3.LegoEV3;
 import org.catrobat.catroid.devices.mindstorms.nxt.LegoNXT;
 import org.catrobat.catroid.stage.StageResourceInterface;
 
@@ -32,6 +33,7 @@ public interface BluetoothDevice extends StageResourceInterface {
 
 	Class<LegoNXT> LEGO_NXT = LegoNXT.class;
 	Class<Phiro> PHIRO = Phiro.class;
+	Class<LegoEV3> LEGO_EV3 = LegoEV3.class;
 
 //	Class<Arduino> ARDUINO = Arduino.class;
 //	Class<Albert> ALBERT = Albert.class;
