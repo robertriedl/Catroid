@@ -121,12 +121,12 @@ public class StageActivity extends AndroidApplication {
 
 	@Override
 	public void onPause() {
+		super.onPause();
 		SensorHandler.stopSensorListeners();
 		stageListener.activityPause();
 		stageAudioFocus.releaseAudioFocus();
 		LedUtil.pauseLed();
 		VibratorUtil.pauseVibrator();
-		super.onPause();
 
 		if (nfcAdapter != null) {
 			Log.d(TAG, "onPause()disableForegroundDispatch()");
@@ -140,12 +140,12 @@ public class StageActivity extends AndroidApplication {
 
 	@Override
 	public void onResume() {
+		super.onResume();
 		SensorHandler.startSensorListener(this);
 		stageListener.activityResume();
 		stageAudioFocus.requestAudioFocus();
 		LedUtil.resumeLed();
 		VibratorUtil.resumeVibrator();
-		super.onResume();
 
 		if (nfcAdapter != null) {
 			Log.d(TAG, "onResume()enableForegroundDispatch()");
