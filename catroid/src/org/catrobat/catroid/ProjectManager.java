@@ -75,6 +75,7 @@ public final class ProjectManager implements OnLoadProjectCompleteListener, OnCh
 	private boolean comingFromScriptFragmentToSoundFragment;
 	private boolean comingFromScriptFragmentToLooksFragment;
 	private boolean handleCorrectAddButton;
+	private boolean faceDetectionFirstRun;
 
 	private FileChecksumContainer fileChecksumContainer = new FileChecksumContainer();
 
@@ -82,6 +83,7 @@ public final class ProjectManager implements OnLoadProjectCompleteListener, OnCh
 		this.comingFromScriptFragmentToSoundFragment = false;
 		this.comingFromScriptFragmentToLooksFragment = false;
 		this.handleCorrectAddButton = false;
+		faceDetectionFirstRun = true;
 	}
 
 	public void setComingFromScriptFragmentToSoundFragment(boolean value) {
@@ -110,6 +112,14 @@ public final class ProjectManager implements OnLoadProjectCompleteListener, OnCh
 
 	public static ProjectManager getInstance() {
 		return INSTANCE;
+	}
+
+	public void setFaceDetectionFirstRunFalse() {
+		faceDetectionFirstRun = false;
+	}
+
+	public boolean getFaceDetectionFirstRun() {
+		return faceDetectionFirstRun;
 	}
 
 	public void uploadProject(String projectName, FragmentActivity fragmentActivity) {
