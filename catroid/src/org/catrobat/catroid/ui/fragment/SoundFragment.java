@@ -205,6 +205,10 @@ public class SoundFragment extends ScriptActivityFragment implements SoundBaseAd
 			StorageHandler.getInstance().clearBackPackSoundDirectory();
 		}
 
+/*		if (BackPackListManager.getInstance().getSoundInfoArrayList().size() > 0) {
+			menu.findItem(R.id.delete).setVisible(false);
+		}*/
+
 		super.onPrepareOptionsMenu(menu);
 	}
 

@@ -236,6 +236,12 @@ public class LookFragment extends ScriptActivityFragment implements OnLookEditLi
 	}
 
 	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_look, container, false);
 	}
@@ -313,14 +319,21 @@ public class LookFragment extends ScriptActivityFragment implements OnLookEditLi
 		menu.findItem(R.id.rename).setVisible(true);
 		menu.findItem(R.id.show_details).setVisible(true);
 		menu.findItem(R.id.settings).setVisible(true);
-		menu.findItem(R.id.context_menu_move_up).setVisible(true);
-		menu.findItem(R.id.context_menu_move_down).setVisible(true);
-		menu.findItem(R.id.context_menu_move_to_top).setVisible(true);
-		menu.findItem(R.id.context_menu_move_to_bottom).setVisible(true);
 
 		if (!BuildConfig.FEATURE_BACKPACK_ENABLED) {
 			menu.findItem(R.id.backpack).setVisible(false);
 			menu.findItem(R.id.unpacking).setVisible(false);
+		}
+
+		MenuItem delete = menu.findItem(R.id.delete);
+
+		if (lookDataList.size() == 0) {
+			delete.setEnabled(false);
+			delete.setVisible(false);
+		}
+		else {
+			delete.setEnabled(true);
+			delete.setVisible(true);
 		}
 
 		super.onPrepareOptionsMenu(menu);
@@ -812,6 +825,9 @@ public class LookFragment extends ScriptActivityFragment implements OnLookEditLi
 			public void onClick(DialogInterface dialog, int id) {
 				LookController.getInstance().deleteCheckedLooks(adapter, lookDataList, activity);
 				clearCheckedLooksAndEnableButtons();
+
+		getSherlockActivity().invalidateOptionsMenu();
+
 			}
 		});
 		builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
@@ -935,6 +951,8 @@ public class LookFragment extends ScriptActivityFragment implements OnLookEditLi
 		if (lookDataListChangedAfterNewListener != null) {
 			lookDataListChangedAfterNewListener.onLookDataListChangedAfterNew(lookData);
 		}
+
+		getSherlockActivity().invalidateOptionsMenu();
 
 		//scroll down the list to the new item:
 		final ListView listView = getListView();
