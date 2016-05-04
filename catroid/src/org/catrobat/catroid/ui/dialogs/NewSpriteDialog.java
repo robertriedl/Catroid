@@ -53,6 +53,7 @@ import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.content.bricks.PointToBrick.SpinnerAdapterWrapper;
 import org.catrobat.catroid.io.StorageHandler;
 import org.catrobat.catroid.ui.ProgramMenuActivity;
+import org.catrobat.catroid.ui.ProjectActivity;
 import org.catrobat.catroid.ui.ScriptActivity;
 import org.catrobat.catroid.ui.SettingsActivity;
 import org.catrobat.catroid.ui.WebViewActivity;
@@ -428,6 +429,12 @@ public class NewSpriteDialog extends DialogFragment {
 		projectManager.addSprite(sprite);
 		sprite.getLookDataList().add(lookData);
 
+		if(projectManager.getInstance().getCurrentProject().getSpriteList().size() <= 1){
+			setHelpTextVisible(true);
+		} else {
+			setHelpTextVisible(false);
+		}
+
 		if (requestedAction == ActionAfterFinished.ACTION_UPDATE_SPINNER && spinnerAdapter != null) {
 			Intent broadcastIntent;
 			broadcastIntent = new Intent(ScriptActivity.ACTION_BRICK_LIST_CHANGED);
@@ -458,5 +465,21 @@ public class NewSpriteDialog extends DialogFragment {
 	public enum DialogWizardStep {
 		STEP_1, STEP_2;
 		static final String KEY = "step";
+	}
+
+	public void setHelpTextVisible(boolean visibility){
+		if (visibility) {
+			View emptyListViewHeading = getActivity().findViewById(R.id.fragment_sprite_text_heading);
+			View emptyListViewDescription = getActivity().findViewById(R.id.fragment_sprite_text_description);
+
+			emptyListViewHeading.setVisibility(View.VISIBLE);
+			emptyListViewDescription.setVisibility(View.VISIBLE);
+		} else {
+			View emptyListViewHeading = getActivity().findViewById(R.id.fragment_sprite_text_heading);
+			View emptyListViewDescription = getActivity().findViewById(R.id.fragment_sprite_text_description);
+
+			emptyListViewHeading.setVisibility(View.INVISIBLE);
+			emptyListViewDescription.setVisibility(View.INVISIBLE);
+		}
 	}
 }

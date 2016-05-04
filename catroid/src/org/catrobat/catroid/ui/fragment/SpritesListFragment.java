@@ -162,6 +162,13 @@ public class SpritesListFragment extends ScriptActivityFragment implements Sprit
 
 			isLoading = true;
 
+			if(getSpriteListSize()<= 1){
+				setHelpTextVisible(true);
+			}
+			else{
+				setHelpTextVisible(false);
+			}
+
 			loadProjectTask = new LoadProjectTask(getActivity(), programName, true, true);
 			loadProjectTask.setOnLoadProjectCompleteListener(this);
 			loadProjectTask.execute();
@@ -491,6 +498,13 @@ public class SpritesListFragment extends ScriptActivityFragment implements Sprit
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
 				deleteCheckedSprites();
+
+				if(getSpriteListSize()<= 1){
+					setHelpTextVisible(true);
+				} else{
+					setHelpTextVisible(false);
+				}
+
 				clearCheckedSpritesAndEnableButtons();
 			}
 		});
@@ -856,5 +870,25 @@ public class SpritesListFragment extends ScriptActivityFragment implements Sprit
 			}
 		}
 		return newName;
+	}
+
+	public int getSpriteListSize() {
+		return spriteList.size();
+	}
+
+	public void setHelpTextVisible(boolean visibility){
+		if (visibility) {
+			View emptyListViewHeading = getView().findViewById(R.id.fragment_sprite_text_heading);
+			View emptyListViewDescription = getView().findViewById(R.id.fragment_sprite_text_description);
+
+			emptyListViewHeading.setVisibility(View.VISIBLE);
+			emptyListViewDescription.setVisibility(View.VISIBLE);
+		} else {
+			View emptyListViewHeading = getView().findViewById(R.id.fragment_sprite_text_heading);
+			View emptyListViewDescription = getView().findViewById(R.id.fragment_sprite_text_description);
+
+			emptyListViewHeading.setVisibility(View.INVISIBLE);
+			emptyListViewDescription.setVisibility(View.INVISIBLE);
+		}
 	}
 }
