@@ -166,6 +166,11 @@ public final class Constants {
 	public static final String MEDIA_TYPE_LOOK = "look";
 	public static final String MEDIA_TYPE_SOUND = "sound";
 	public static final String NO_VARIABLE_SELECTED = "No variable set";
+	public static final int VARIABLE_VALUE_STRING = 801;
+	public static final int VARIABLE_VALUE_FLOAT = 802;
+	public static final int VARIABLE_VALUE_INTEGER = 803;
+	public static final int SHOW_VARIABLE_FONT_SIZE = 30;
+	public static final int MAX_VARIABLE_VALUE_LENGTH = 20;
 	public static final String PROJECT_UPLOAD_NAME = "projectUploadName";
 	public static final String PROJECT_UPLOAD_DESCRIPTION = "setProjectDescription";
 
