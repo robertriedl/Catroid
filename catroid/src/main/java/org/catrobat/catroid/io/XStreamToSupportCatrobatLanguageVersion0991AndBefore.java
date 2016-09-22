@@ -604,10 +604,10 @@ public class XStreamToSupportCatrobatLanguageVersion0991AndBefore extends XStrea
 		brickInfoMap.put("setTextBrick", brickInfo);
 
 		brickInfo = new BrickInfo(ShowVariableBrick.class.getSimpleName());
-		brickInfoMap.put("showTextBrick", brickInfo);
+		brickInfoMap.put("showVariableBrick", brickInfo);
 
 		brickInfo = new BrickInfo(HideVariableBrick.class.getSimpleName());
-		brickInfoMap.put("hideTextBrick", brickInfo);
+		brickInfoMap.put("hideVariableBrick", brickInfo);
 
 		brickInfo = new BrickInfo(CameraBrick.class.getSimpleName());
 		brickInfoMap.put("videoBrick", brickInfo);
@@ -932,6 +932,12 @@ public class XStreamToSupportCatrobatLanguageVersion0991AndBefore extends XStrea
 					if (brickNode.getNodeName().equals("changeGhostEffectByNBrick")) {
 						originalDocument.renameNode(brickNode, brickNode.getNamespaceURI(), "changeTransparencyByNBrick");
 					}
+					if (brickNode.getNodeName().equals("showTextBrick")) {
+						originalDocument.renameNode(brickNode, brickNode.getNamespaceURI(), "showVariableBrick");
+					}
+					if (brickNode.getNodeName().equals("hideTextBrick")) {
+						originalDocument.renameNode(brickNode, brickNode.getNamespaceURI(), "hideVariableBrick");
+					}
 
 					BrickInfo brickInfo = brickInfoMap.get(brickNode.getNodeName());
 					if (brickInfo != null) {
@@ -945,6 +951,18 @@ public class XStreamToSupportCatrobatLanguageVersion0991AndBefore extends XStrea
 
 								if (brickChild.getNodeName().equals("changeGhostEffect")) {
 									originalDocument.renameNode(brickChild, brickChild.getNamespaceURI(), "changeTransparency");
+								}
+
+								if (brickNode.getNodeName().equals("showTextBrick")) {
+									originalDocument.renameNode(brickChild, brickChild.getNamespaceURI(),
+											"showVariableBrick");
+								}
+								if (brickNode.getNodeName().equals("hideTextBrick")) {
+									originalDocument.renameNode(brickChild, brickChild.getNamespaceURI(),
+											"hideVariableBrick");
+								}
+								if (brickChild.getNodeName().equals("userVariableName")) {
+									originalDocument.removeChild(brickChild);
 								}
 
 								if (brickInfo.getBrickFieldForOldFieldName(brickChild.getNodeName()) != null) {
