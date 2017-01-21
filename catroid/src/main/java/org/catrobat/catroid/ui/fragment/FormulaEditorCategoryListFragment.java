@@ -50,6 +50,8 @@ import org.catrobat.catroid.formulaeditor.SensorHandler;
 import org.catrobat.catroid.ui.SettingsActivity;
 import org.catrobat.catroid.ui.adapter.CategoryListAdapter;
 import org.catrobat.catroid.ui.dialogs.FormulaEditorChooseSpriteDialog;
+import org.catrobat.catroid.ui.dialogs.FormulaEditorCollisionChooseSpriteDialog;
+import org.catrobat.catroid.ui.dialogs.FormulaEditorDistanceToChooseSpriteDialog;
 import org.catrobat.catroid.ui.dialogs.LegoSensorPortConfigDialog;
 
 import java.util.ArrayList;
@@ -76,16 +78,15 @@ public class FormulaEditorCategoryListFragment extends ListFragment implements D
 	private CategoryListAdapter adapter;
 
 	private static final int[] OBJECT_GENERAL_PROPERTIES_ITEMS = {R.string.formula_editor_object_transparency,
-			R.string.formula_editor_object_brightness, R.string.formula_editor_object_color/*,
-			R.string.formula_editor_object_distance_to*/};
+			R.string.formula_editor_object_brightness, R.string.formula_editor_object_color};
 
 	private static final int[] OBJECT_PHYSICAL_PROPERTIES_ITEMS = {R.string.formula_editor_object_x,
 			R.string.formula_editor_object_y, R.string.formula_editor_object_size,
 			R.string.formula_editor_object_rotation, R.string.formula_editor_object_layer,
 			R.string.formula_editor_function_collision,
 			R.string.formula_editor_function_collides_with_edge, R.string.formula_editor_function_touched,
-			R.string.formula_editor_object_x_velocity, R.string.formula_editor_object_y_velocity,
-			R.string.formula_editor_object_angular_velocity};
+			R.string.formula_editor_object_distance_to, R.string.formula_editor_object_x_velocity,
+			R.string.formula_editor_object_y_velocity, R.string.formula_editor_object_angular_velocity};
 
 	private static final int[] OBJECT_ITEMS_LOOK = {R.string.formula_editor_object_look_number,
 			R.string.formula_editor_object_look_name};
@@ -232,8 +233,9 @@ public class FormulaEditorCategoryListFragment extends ListFragment implements D
 			if (formulaEditor != null) {
 				if (itemsIds[position] == R.string.formula_editor_function_collision) {
 					showChooseSpriteDialog(formulaEditor);
+				} else if (itemsIds[position] == R.string.formula_editor_object_distance_to) {
+					showDistanceToSpriteDialog(formulaEditor);
 				} else {
-
 					formulaEditor.addResourceToActiveFormula(itemsIds[position]);
 					formulaEditor.updateButtonsOnKeyboardAndInvalidateOptionsMenu();
 				}
@@ -265,7 +267,7 @@ public class FormulaEditorCategoryListFragment extends ListFragment implements D
 
 	private void showChooseSpriteDialog(FormulaEditorFragment fragment) {
 		final FormulaEditorFragment formulaEditor = fragment;
-		final FormulaEditorChooseSpriteDialog dialog = FormulaEditorChooseSpriteDialog.newInstance();
+		final FormulaEditorCollisionChooseSpriteDialog dialog = FormulaEditorCollisionChooseSpriteDialog.newInstance();
 		dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
 			@Override
 			public void onDismiss(DialogInterface dialogInterface) {
@@ -281,6 +283,36 @@ public class FormulaEditorCategoryListFragment extends ListFragment implements D
 					}
 					if (secondSprite != null) {
 						formulaEditor.addCollideFormulaToActiveFormula(secondSprite.getName());
+					}
+				}
+			}
+		});
+		dialog.showDialog(this);
+	}
+
+	private void showDistanceToSpriteDialog(FormulaEditorFragment formulaEditorFragment) {
+		final FormulaEditorFragment formulaEditor = formulaEditorFragment;
+		final FormulaEditorDistanceToChooseSpriteDialog dialog = FormulaEditorDistanceToChooseSpriteDialog.newInstance();
+
+		dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+			@Override
+			public void onDismiss(DialogInterface dialogInterface) {
+				if (dialog.getSuccessStatus()) {
+					Sprite secondSprite = null;
+					boolean touchPositionSelected = dialog.getDistanceToTouchPositionSelected();
+
+					for (Sprite sprite : ProjectManager.getInstance().getCurrentScene().getSpriteList()) {
+						if (sprite.getName().compareTo(dialog.getSprite()) == 0) {
+							secondSprite = sprite;
+						}
+					}
+					if (secondSprite != null && !touchPositionSelected) {
+						formulaEditor.addDistanceToSpritePositionFormulaToActiveFormula(secondSprite.getName());
+					}
+					if (dialog.getSprite() == getString(R.string.formula_editor_object_distance_to_touch_position_spinner_selection)
+							&& touchPositionSelected) {
+						formulaEditor.addDistanceToTouchPositionFormulaToActiveFormula("");
 					}
 				}
 			}

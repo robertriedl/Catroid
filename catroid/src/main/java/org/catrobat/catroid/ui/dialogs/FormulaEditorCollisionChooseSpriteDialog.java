@@ -20,45 +20,33 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.catrobat.catroid.ui.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
+import android.widget.TextView;
 
 import org.catrobat.catroid.ProjectManager;
 import org.catrobat.catroid.R;
-import org.catrobat.catroid.content.Sprite;
 
-import java.util.ArrayList;
-import java.util.List;
+public class FormulaEditorCollisionChooseSpriteDialog extends FormulaEditorChooseSpriteDialog {
 
-public class FormulaEditorChooseSpriteDialog extends DialogFragment {
-
-	protected static final String TAG = FormulaEditorChooseSpriteDialog.class.getSimpleName();
-	protected DialogInterface.OnDismissListener onDismissListener;
-	protected boolean success = false;
-	protected Spinner spinnerOne;
-
-	public static FormulaEditorChooseSpriteDialog newInstance() {
-		return new FormulaEditorChooseSpriteDialog();
-	}
-
-	public void showDialog(Fragment fragment) {
-		show(fragment.getActivity().getFragmentManager(), TAG);
+	public static FormulaEditorCollisionChooseSpriteDialog newInstance() {
+		return new FormulaEditorCollisionChooseSpriteDialog();
 	}
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		View dialogView = View.inflate(getActivity(), R.layout.dialog_formulaeditor_choose_sprite, null);
-		//View dialogView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_formulaeditor_choose_sprite, );
+
+		TextView stringName = (TextView) dialogView.findViewById(R.id.string_name);
+		stringName.setText(getString(R.string.formula_editor_function_collision));
+
 		setUpSpinner(dialogView);
 
 		final AlertDialog chooseSpriteDialog = new AlertDialog.Builder(getActivity()).setView(dialogView)
@@ -86,41 +74,5 @@ public class FormulaEditorChooseSpriteDialog extends DialogFragment {
 		});
 
 		return chooseSpriteDialog;
-	}
-
-	public void setOnDismissListener(DialogInterface.OnDismissListener onDismissListener) {
-		this.onDismissListener = onDismissListener;
-	}
-
-	@Override
-	public void onDismiss(final DialogInterface dialog) {
-		super.onDismiss(dialog);
-		if (onDismissListener != null) {
-			onDismissListener.onDismiss(dialog);
-		}
-	}
-
-	protected void setUpSpinner(View dialogView) {
-		spinnerOne = (Spinner) dialogView.findViewById(R.id.formula_editor_choose_sprite_spinner_one);
-		List<String> spriteNames = new ArrayList<>();
-		for (Sprite sprite : ProjectManager.getInstance().getCurrentScene().getSpriteList()) {
-			if (sprite.getName().compareTo(getActivity().getString(R.string.background)) != 0
-					&& sprite.getName().compareTo(ProjectManager.getInstance().getCurrentSprite().getName()) != 0) {
-				spriteNames.add(sprite.getName());
-			}
-		}
-		ArrayAdapter<String> adapterOne = new ArrayAdapter<>(getActivity(),
-				android.R.layout.simple_spinner_item, spriteNames);
-
-		adapterOne.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerOne.setAdapter(adapterOne);
-	}
-
-	public boolean getSuccessStatus() {
-		return success;
-	}
-
-	public String getSprite() {
-		return String.valueOf(spinnerOne.getSelectedItem());
 	}
 }
