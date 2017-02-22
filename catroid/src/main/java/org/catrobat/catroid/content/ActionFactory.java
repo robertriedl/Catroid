@@ -962,11 +962,16 @@ public class ActionFactory extends Actions {
 		return action;
 	}
 
-	public Action createShowVariableAction(Sprite sprite, Formula xPosition, Formula yPosition, UserVariable userVariable) {
+	public Action createShowVariableAction(Sprite sprite, Formula xPosition, Formula yPosition, Formula
+			textSize, Formula red, Formula green, Formula blue, UserVariable userVariable) {
 		ShowTextAction action = action(ShowTextAction.class);
-		action.setPosition(xPosition, yPosition);
-		action.setVariableToShow(userVariable);
 		action.setSprite(sprite);
+		action.setPosition(xPosition, yPosition);
+		action.setTextSizeInPercent(textSize);
+		action.setTextColorRed(red);
+		action.setTextColorGreen(green);
+		action.setTextColorBlue(blue);
+		action.setVariableToShow(userVariable);
 		UserBrick userBrick = ProjectManager.getInstance().getCurrentUserBrick();
 		action.setUserBrick(userBrick);
 		return action;

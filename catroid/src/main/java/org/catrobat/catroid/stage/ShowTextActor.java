@@ -23,13 +23,14 @@
 
 package org.catrobat.catroid.stage;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import org.catrobat.catroid.ProjectManager;
-import org.catrobat.catroid.common.Constants;
 import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.content.bricks.UserBrick;
 import org.catrobat.catroid.formulaeditor.DataContainer;
@@ -42,6 +43,12 @@ public class ShowTextActor extends Actor {
 
 	private int xPosition;
 	private int yPosition;
+	private int textSize;
+	private float textColorRed;
+	private float textColorGreen;
+	private float textColorBlue;
+	private int alpha = 1;
+
 	private UserVariable variableToShow;
 	private String variableNameToCompare;
 	private String variableValue;
@@ -49,15 +56,19 @@ public class ShowTextActor extends Actor {
 
 	private Sprite sprite;
 	private UserBrick userBrick;
-	private float scale = 3f;
 	private BitmapFont font;
 
-	public ShowTextActor(UserVariable userVariable, int xPosition, int yPosition, Sprite sprite, UserBrick userBrick) {
+	public ShowTextActor(UserVariable userVariable, int xPosition, int yPosition, int textSize, float red, float green,
+			float blue, Sprite sprite, UserBrick userBrick) {
 		this.variableToShow = userVariable;
 		this.variableNameToCompare = variableToShow.getName();
 		this.variableValueWithoutDecimal = null;
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
+		this.textSize = textSize;
+		this.textColorRed = red;
+		this.textColorGreen = green;
+		this.textColorBlue = blue;
 		this.sprite = sprite;
 		this.userBrick = userBrick;
 		init();
@@ -83,7 +94,7 @@ public class ShowTextActor extends Actor {
 		}
 
 		if (variableToShow.isDummy()) {
-			font.draw(batch, Constants.NO_VARIABLE_SELECTED, xPosition, yPosition);
+			font.draw(batch, variableToShow.getValue().toString(), xPosition, yPosition);
 		} else {
 			for (UserVariable variable : variableList) {
 				if (variable.getName().equals(variableToShow.getName())) {
@@ -102,9 +113,15 @@ public class ShowTextActor extends Actor {
 	}
 
 	private void init() {
-		font = new BitmapFont();
-		font.setColor(Color.BLACK);
-		font.getData().setScale(scale);
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/arial.ttf"));
+		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+		parameter.size = (textSize/100) * 48;
+
+		parameter.color = new Color(textColorRed/255, textColorGreen/255, textColorBlue/255, alpha);
+
+		font = generator.generateFont(parameter);
+		generator.dispose();
 	}
 
 	private boolean isNumberAndInteger(String variableValue) {

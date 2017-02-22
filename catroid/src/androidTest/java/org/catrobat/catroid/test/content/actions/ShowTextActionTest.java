@@ -57,10 +57,10 @@ public class ShowTextActionTest extends AndroidTestCase {
 
 		ActionFactory factory = sprite.getActionFactory();
 		Action firstSpriteAction = factory.createShowVariableAction(sprite, new Formula(0), new Formula(0),
-				USER_VARIABLE);
+				new Formula(100), new Formula(0), new Formula(0), new Formula(0), USER_VARIABLE);
 		factory = secondSprite.getActionFactory();
 		Action secondSpriteAction = factory.createShowVariableAction(secondSprite, new Formula(0), new Formula(0),
-				USER_VARIABLE);
+				new Formula(100), new Formula(0), new Formula(0), new Formula(0), USER_VARIABLE);
 		firstSpriteAction.act(1.0f);
 		ProjectManager.getInstance().setCurrentSprite(secondSprite);
 		secondSpriteAction.act(1.0f);

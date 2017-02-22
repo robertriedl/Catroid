@@ -119,6 +119,10 @@ public final class BrickValues {
 	//Constants Variables
 	public static final double SET_VARIABLE = 1d;
 	public static final double CHANGE_VARIABLE = 1d;
+	public static final int SHOW_VARIABLE_TEXT_SIZE = 100;
+	public static final int SHOW_VARIABLE_TEXT_COLOR_RED = 0;
+	public static final int SHOW_VARIABLE_TEXT_COLOR_GREEN = 0;
+	public static final int SHOW_VARIABLE_TEXT_COLOR_BLUE = 0;
 
 	//Constants Lists
 	public static final double ADD_ITEM_TO_USERLIST = 1d;

@@ -48,8 +48,12 @@ public class ShowTextAction extends TemporalAction {
 
 	private Formula xPosition;
 	private Formula yPosition;
-	private UserVariable variableToShow;
+	private Formula textSize;
+	private Formula textColorRed;
+	private Formula textColorGreen;
+	private Formula textColorBlue;
 
+	private UserVariable variableToShow;
 	private Sprite sprite;
 	private UserBrick userBrick;
 	private ShowTextActor actor;
@@ -59,6 +63,10 @@ public class ShowTextAction extends TemporalAction {
 		try {
 			int xPosition = this.xPosition.interpretInteger(sprite);
 			int yPosition = this.yPosition.interpretInteger(sprite);
+			int textSize = this.textSize.interpretInteger(sprite);
+			float textColorRed = this.textColorRed.interpretFloat(sprite);
+			float textColorGreen = this.textColorGreen.interpretFloat(sprite);
+			float textColorBlue = this.textColorBlue.interpretFloat(sprite);
 
 			DataContainer dataContainer = ProjectManager.getInstance().getSceneToPlay().getDataContainer();
 			List<UserVariable> variableList = dataContainer.getProjectVariables();
@@ -69,7 +77,8 @@ public class ShowTextAction extends TemporalAction {
 			List<UserVariable> userBrickVariableList = dataContainer.getOrCreateVariableListForUserBrick(userBrick);
 			if (StageActivity.stageListener != null) {
 				Array<Actor> stageActors = StageActivity.stageListener.getStage().getActors();
-				ShowTextActor dummyActor = new ShowTextActor(new UserVariable("dummyActor"), 0, 0, sprite, userBrick);
+				ShowTextActor dummyActor = new ShowTextActor(new UserVariable("dummyActor"), 0, 0, 100, 0, 0, 0,
+						sprite, userBrick);
 
 				for (Actor actor : stageActors) {
 					if (actor.getClass().equals(dummyActor.getClass())) {
@@ -82,7 +91,8 @@ public class ShowTextAction extends TemporalAction {
 					}
 				}
 
-				actor = new ShowTextActor(variableToShow, xPosition, yPosition, sprite, userBrick);
+				actor = new ShowTextActor(variableToShow, xPosition, yPosition, textSize, textColorRed,
+						textColorGreen, textColorBlue, sprite, userBrick);
 				StageActivity.stageListener.addActor(actor);
 			}
 
@@ -121,13 +131,29 @@ public class ShowTextAction extends TemporalAction {
 		}
 	}
 
+	public void setSprite(Sprite sprite) {
+		this.sprite = sprite;
+	}
+
 	public void setPosition(Formula xPosition, Formula yPosition) {
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
 	}
 
-	public void setSprite(Sprite sprite) {
-		this.sprite = sprite;
+	public void setTextSizeInPercent(Formula textSize) {
+		this.textSize = textSize;
+	}
+
+	public void setTextColorRed(Formula textColorRed) {
+		this.textColorRed = textColorRed;
+	}
+
+	public void setTextColorGreen(Formula textColorGreen) {
+		this.textColorGreen = textColorGreen;
+	}
+
+	public void setTextColorBlue(Formula textColorBlue) {
+		this.textColorBlue = textColorBlue;
 	}
 
 	public void setVariableToShow(UserVariable userVariable) {

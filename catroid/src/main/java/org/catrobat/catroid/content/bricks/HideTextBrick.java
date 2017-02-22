@@ -60,7 +60,7 @@ public class HideTextBrick extends UserVariableBrick {
 
 	@Override
 	public void showFormulaEditorToEditFormula(View view) {
-		FormulaEditorFragment.changeInputField(view, BrickField.HIDETEXT);
+		FormulaEditorFragment.changeInputField(view, BrickField.HIDEVARIABLE);
 	}
 
 	@Override
