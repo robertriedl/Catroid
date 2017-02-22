@@ -38,7 +38,7 @@
 
     <org.catrobat.catroid.ui.BrickLayout
         android:id="@+id/brick_show_variable_layout"
-        style="@style/BrickContainer.UserVariables.Medium"
+        style="@style/BrickContainer.UserVariables.Big"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -54,6 +54,7 @@
 
         <Spinner
             android:id="@+id/show_variable_spinner"
+            app:layout_newLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="false"
@@ -91,6 +92,66 @@
             app:layout_inputType="number"
             app:layout_textField="true" >
         </TextView >
+
+        <TextView
+            android:id="@+id/brick_show_variable_label_with"
+            style="@style/BrickText.SingleLine"
+            app:layout_newLine="true"
+            android:text="@string/brick_show_variable_size" >
+        </TextView >
+
+        <TextView
+            android:id="@+id/brick_show_variable_size_edit_text"
+            style="@style/BrickEditText"
+            app:layout_inputType="number"
+            app:layout_textField="true" >
+        </TextView >
+
+        <TextView
+            android:id="@+id/brick_show_variable_size_percent"
+            style="@style/BrickText.SingleLine"
+            android:text="@string/percent_symbol" >
+        </TextView >
+
+        <TextView
+            android:id="@+id/brick_show_variable_color_red_textview"
+            style="@style/BrickText"
+            app:layout_newLine="true"
+            android:text="@string/brick_show_variable_color_red" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/brick_show_variable_color_red_edit_text"
+            style="@style/BrickEditText"
+            app:layout_inputType="number"
+            app:layout_textField="true" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/brick_show_variable_color_green_textview"
+            style="@style/BrickText"
+            android:text="@string/brick_show_variable_color_green" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/brick_show_variable_color_green_edit_text"
+            style="@style/BrickEditText"
+            app:layout_inputType="number"
+            app:layout_textField="true" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/brick_show_variable_color_blue_textview"
+            style="@style/BrickText"
+            android:text="@string/brick_show_variable_color_blue" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/brick_show_variable_color_blue_edit_text"
+            style="@style/BrickEditText"
+            app:layout_inputType="number"
+            app:layout_textField="true" >
+        </TextView>
 
     </org.catrobat.catroid.ui.BrickLayout >
 

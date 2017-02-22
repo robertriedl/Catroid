@@ -452,7 +452,9 @@ public class CategoryBricksFactory {
 		List<Brick> dataBrickList = new ArrayList<>();
 		dataBrickList.add(new SetVariableBrick(BrickValues.SET_VARIABLE));
 		dataBrickList.add(new ChangeVariableBrick(BrickValues.CHANGE_VARIABLE));
-		dataBrickList.add(new ShowTextBrick(BrickValues.X_POSITION, BrickValues.Y_POSITION));
+		dataBrickList.add(new ShowTextBrick(BrickValues.X_POSITION, BrickValues.Y_POSITION, BrickValues
+				.SHOW_VARIABLE_TEXT_SIZE, BrickValues.SHOW_VARIABLE_TEXT_COLOR_RED, BrickValues
+				.SHOW_VARIABLE_TEXT_COLOR_GREEN, BrickValues.SHOW_VARIABLE_TEXT_COLOR_BLUE));
 		dataBrickList.add(new HideTextBrick());
 		dataBrickList.add(new AddItemToUserListBrick(BrickValues.ADD_ITEM_TO_USERLIST));
 		dataBrickList.add(new DeleteItemOfUserListBrick(BrickValues.DELETE_ITEM_OF_USERLIST));

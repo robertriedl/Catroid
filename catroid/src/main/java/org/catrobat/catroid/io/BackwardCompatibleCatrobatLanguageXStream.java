@@ -613,6 +613,13 @@ public class BackwardCompatibleCatrobatLanguageXStream extends XStream {
 		brickInfoMap.put("setTextBrick", brickInfo);
 
 		brickInfo = new BrickInfo(ShowTextBrick.class.getSimpleName());
+		brickInfo.addBrickFieldToMap("variableFormula", BrickField.SHOWVARIABLE);
+		brickInfo.addBrickFieldToMap("xPosition", BrickField.X_POSITION);
+		brickInfo.addBrickFieldToMap("yPosition", BrickField.Y_POSITION);
+		brickInfo.addBrickFieldToMap("textSize", BrickField.SHOWVARIABLE_SIZE);
+		brickInfo.addBrickFieldToMap("textColor", BrickField.SHOWVARIABLE_COLOR_RED);
+		brickInfo.addBrickFieldToMap("textColor", BrickField.SHOWVARIABLE_COLOR_GREEN);
+		brickInfo.addBrickFieldToMap("textColor", BrickField.SHOWVARIABLE_COLOR_BLUE);
 		brickInfoMap.put("showTextBrick", brickInfo);
 
 		brickInfo = new BrickInfo(HideTextBrick.class.getSimpleName());
