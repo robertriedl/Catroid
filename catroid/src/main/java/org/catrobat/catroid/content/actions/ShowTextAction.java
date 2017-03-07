@@ -58,6 +58,8 @@ public class ShowTextAction extends TemporalAction {
 	private UserBrick userBrick;
 	private ShowTextActor actor;
 
+	private boolean showLabel;
+
 	@Override
 	protected void begin() {
 		try {
@@ -78,7 +80,7 @@ public class ShowTextAction extends TemporalAction {
 			if (StageActivity.stageListener != null) {
 				Array<Actor> stageActors = StageActivity.stageListener.getStage().getActors();
 				ShowTextActor dummyActor = new ShowTextActor(new UserVariable("dummyActor"), 0, 0, 100, 0, 0, 0,
-						sprite, userBrick);
+						sprite, userBrick, showLabel);
 
 				for (Actor actor : stageActors) {
 					if (actor.getClass().equals(dummyActor.getClass())) {
@@ -92,7 +94,7 @@ public class ShowTextAction extends TemporalAction {
 				}
 
 				actor = new ShowTextActor(variableToShow, xPosition, yPosition, textSize, textColorRed,
-						textColorGreen, textColorBlue, sprite, userBrick);
+						textColorGreen, textColorBlue, sprite, userBrick, showLabel);
 				StageActivity.stageListener.addActor(actor);
 			}
 
@@ -162,5 +164,9 @@ public class ShowTextAction extends TemporalAction {
 
 	public void setUserBrick(UserBrick userBrick) {
 		this.userBrick = userBrick;
+	}
+
+	public void setShowLabel(boolean showLabel) {
+		this.showLabel = showLabel;
 	}
 }

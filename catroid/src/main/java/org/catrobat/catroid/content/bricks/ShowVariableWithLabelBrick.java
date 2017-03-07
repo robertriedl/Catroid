@@ -53,42 +53,22 @@ import org.catrobat.catroid.utils.Utils;
 
 import java.util.List;
 
-public class ShowTextBrick extends UserVariableBrick {
+public class ShowVariableWithLabelBrick extends ShowTextBrick {
 
 	private static final long serialVersionUID = 1L;
 
 	private transient View prototypeView;
-	public String userVariableName;
-	protected boolean showLabel = false;
 
-	protected transient ColorSeekbar colorSeekbar = new ColorSeekbar(this, BrickField.SHOWVARIABLE_COLOR_RED,
-			BrickField.SHOWVARIABLE_COLOR_GREEN, BrickField.SHOWVARIABLE_COLOR_BLUE);
+	public static final String TAG = ShowVariableWithLabelBrick.class.getSimpleName();
 
-	public static final String TAG = ShowTextBrick.class.getSimpleName();
-
-	public ShowTextBrick() {
-		addAllowedBrickField(BrickField.X_POSITION);
-		addAllowedBrickField(BrickField.Y_POSITION);
-		addAllowedBrickField(BrickField.SHOWVARIABLE_SIZE);
-		addAllowedBrickField(BrickField.SHOWVARIABLE_COLOR_RED);
-		addAllowedBrickField(BrickField.SHOWVARIABLE_COLOR_GREEN);
-		addAllowedBrickField(BrickField.SHOWVARIABLE_COLOR_BLUE);
-	}
-
-	public ShowTextBrick(int xPosition, int yPosition, int textSize, float red, float green, float blue) {
+	public ShowVariableWithLabelBrick(int xPosition, int yPosition, int textSize, float red, float green, float blue) {
 		initializeBrickFields(new Formula(xPosition), new Formula(yPosition), new Formula(textSize),
 				new Formula(red), new Formula(green), new Formula(blue));
 	}
 
-	public ShowTextBrick(Formula xPosition, Formula yPosition, Formula textSize, Formula red, Formula green,
+	public ShowVariableWithLabelBrick(Formula xPosition, Formula yPosition, Formula textSize, Formula red, Formula green,
 			Formula blue) {
 		initializeBrickFields(xPosition, yPosition, textSize, red, green, blue);
-	}
-
-	public ShowTextBrick(int xPosition, int yPosition) {
-		initializeBrickFields(new Formula(xPosition), new Formula(yPosition),
-				new Formula(BrickValues.SHOW_VARIABLE_TEXT_SIZE), new Formula(BrickValues.SHOW_VARIABLE_TEXT_COLOR_RED),
-				new Formula(BrickValues.SHOW_VARIABLE_TEXT_COLOR_GREEN), new Formula(BrickValues.SHOW_VARIABLE_TEXT_COLOR_BLUE));
 	}
 
 	private void initializeBrickFields(Formula xPosition, Formula yPosition, Formula textSize, Formula red, Formula
@@ -107,73 +87,6 @@ public class ShowTextBrick extends UserVariableBrick {
 		setFormulaWithBrickField(BrickField.SHOWVARIABLE_COLOR_BLUE, blue);
 	}
 
-	public void setXPosition(Formula xPosition) {
-		setFormulaWithBrickField(BrickField.X_POSITION, xPosition);
-	}
-
-	public void setYPosition(Formula yPosition) {
-		setFormulaWithBrickField(BrickField.Y_POSITION, yPosition);
-	}
-
-	@Override
-	public void showFormulaEditorToEditFormula(View view) {
-		switch (view.getId()) {
-			case R.id.brick_show_variable_edit_text_y:
-				FormulaEditorFragment.showFragment(view, this, BrickField.Y_POSITION);
-				break;
-
-			case R.id.brick_show_variable_size_edit_text:
-				FormulaEditorFragment.showFragment(view, this, BrickField.SHOWVARIABLE_SIZE);
-				break;
-
-			case R.id.brick_show_variable_color_red_edit_text:
-				showColorBar(view);
-				break;
-
-			case R.id.brick_show_variable_color_green_edit_text:
-				showColorBar(view);
-				break;
-
-			case R.id.brick_show_variable_color_blue_edit_text:
-				showColorBar(view);
-				break;
-
-			case R.id.brick_show_variable_edit_text_x:
-			default:
-				FormulaEditorFragment.showFragment(view, this, BrickField.X_POSITION);
-				break;
-		}
-	}
-
-	public void showColorBar(View view) {
-		if (areColorFieldsNumbers()) {
-			FormulaEditorFragment.showCustomFragment(view, this, getClickedBrickField(view));
-		} else {
-			FormulaEditorFragment.showFragment(view, this, getClickedBrickField(view));
-		}
-	}
-
-	protected boolean areColorFieldsNumbers() {
-		return (getFormulaWithBrickField(BrickField.SHOWVARIABLE_COLOR_RED).getRoot().getElementType()
-				== FormulaElement.ElementType.NUMBER)
-				&& (getFormulaWithBrickField(BrickField.SHOWVARIABLE_COLOR_GREEN).getRoot().getElementType()
-				== FormulaElement.ElementType.NUMBER)
-				&& (getFormulaWithBrickField(BrickField.SHOWVARIABLE_COLOR_BLUE).getRoot().getElementType()
-				== FormulaElement.ElementType.NUMBER);
-	}
-
-	protected BrickField getClickedBrickField(View view) {
-		switch (view.getId()) {
-			case R.id.brick_show_variable_color_green_edit_text:
-				return BrickField.SHOWVARIABLE_COLOR_GREEN;
-			case R.id.brick_show_variable_color_blue_edit_text:
-				return BrickField.SHOWVARIABLE_COLOR_BLUE;
-			case R.id.brick_show_variable_color_red_edit_text:
-			default:
-				return BrickField.SHOWVARIABLE_COLOR_RED;
-		}
-	}
-
 	@Override
 	public int getRequiredResources() {
 		return getFormulaWithBrickField(BrickField.Y_POSITION).getRequiredResources() |
@@ -190,18 +103,18 @@ public class ShowTextBrick extends UserVariableBrick {
 			return view;
 		}
 
-		view = View.inflate(context, R.layout.brick_show_variable, null);
+		view = View.inflate(context, R.layout.brick_show_variable_with_label, null);
 		view = BrickViewProvider.setAlphaOnView(view, alphaValue);
 
-		setCheckboxView(R.id.brick_show_variable_checkbox);
+		setCheckboxView(R.id.brick_show_variable_with_label_checkbox);
 
-		TextView editTextXPosition = (TextView) view.findViewById(R.id.brick_show_variable_edit_text_x);
-		getFormulaWithBrickField(BrickField.X_POSITION).setTextFieldId(R.id.brick_show_variable_edit_text_x);
+		TextView editTextXPosition = (TextView) view.findViewById(R.id.brick_show_variable_with_label_edit_text_x);
+		getFormulaWithBrickField(BrickField.X_POSITION).setTextFieldId(R.id.brick_show_variable_with_label_edit_text_x);
 		getFormulaWithBrickField(BrickField.X_POSITION).refreshTextField(view);
 		editTextXPosition.setOnClickListener(this);
 
-		TextView editTextYPosition = (TextView) view.findViewById(R.id.brick_show_variable_edit_text_y);
-		getFormulaWithBrickField(BrickField.Y_POSITION).setTextFieldId(R.id.brick_show_variable_edit_text_y);
+		TextView editTextYPosition = (TextView) view.findViewById(R.id.brick_show_variable_with_label_edit_text_y);
+		getFormulaWithBrickField(BrickField.Y_POSITION).setTextFieldId(R.id.brick_show_variable_with_label_edit_text_y);
 		getFormulaWithBrickField(BrickField.Y_POSITION).refreshTextField(view);
 		editTextYPosition.setOnClickListener(this);
 
@@ -226,7 +139,7 @@ public class ShowTextBrick extends UserVariableBrick {
 						&& (((Spinner) view).getSelectedItemPosition() == 0
 						&& ((Spinner) view).getAdapter().getCount() == 1)) {
 					NewDataDialog dialog = new NewDataDialog((Spinner) view, NewDataDialog.DialogType.USER_VARIABLE);
-					dialog.addVariableDialogListener(ShowTextBrick.this);
+					dialog.addVariableDialogListener(ShowVariableWithLabelBrick.this);
 					dialog.show(((Activity) view.getContext()).getFragmentManager(), NewDataDialog.DIALOG_FRAGMENT_TAG);
 					return true;
 				}
@@ -240,7 +153,7 @@ public class ShowTextBrick extends UserVariableBrick {
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 				if (position == 0 && ((UserVariableAdapterWrapper) parent.getAdapter()).isTouchInDropDownView()) {
 					NewDataDialog dialog = new NewDataDialog((Spinner) parent, NewDataDialog.DialogType.USER_VARIABLE);
-					dialog.addVariableDialogListener(ShowTextBrick.this);
+					dialog.addVariableDialogListener(ShowVariableWithLabelBrick.this);
 					int spinnerPos = ((UserVariableAdapterWrapper) parent.getAdapter())
 							.getPositionOfItem(userVariable);
 					dialog.setUserVariableIfCancel(spinnerPos);
@@ -257,23 +170,23 @@ public class ShowTextBrick extends UserVariableBrick {
 			}
 		});
 
-		TextView editTextSize = (TextView) view.findViewById(R.id.brick_show_variable_size_edit_text);
-		getFormulaWithBrickField(BrickField.SHOWVARIABLE_SIZE).setTextFieldId(R.id.brick_show_variable_size_edit_text);
+		TextView editTextSize = (TextView) view.findViewById(R.id.brick_show_variable_with_label_size_edit_text);
+		getFormulaWithBrickField(BrickField.SHOWVARIABLE_SIZE).setTextFieldId(R.id.brick_show_variable_with_label_size_edit_text);
 		getFormulaWithBrickField(BrickField.SHOWVARIABLE_SIZE).refreshTextField(view);
 		editTextSize.setOnClickListener(this);
 
-		TextView textViewColorRed = (TextView) view.findViewById(R.id.brick_show_variable_color_red_edit_text);
-		getFormulaWithBrickField(BrickField.SHOWVARIABLE_COLOR_RED).setTextFieldId(R.id.brick_show_variable_color_red_edit_text);
+		TextView textViewColorRed = (TextView) view.findViewById(R.id.brick_show_variable_with_label_color_red_edit_text);
+		getFormulaWithBrickField(BrickField.SHOWVARIABLE_COLOR_RED).setTextFieldId(R.id.brick_show_variable_with_label_color_red_edit_text);
 		getFormulaWithBrickField(BrickField.SHOWVARIABLE_COLOR_RED).refreshTextField(view);
 		textViewColorRed.setOnClickListener(this);
 
-		TextView textViewColorGreen = (TextView) view.findViewById(R.id.brick_show_variable_color_green_edit_text);
-		getFormulaWithBrickField(BrickField.SHOWVARIABLE_COLOR_GREEN).setTextFieldId(R.id.brick_show_variable_color_green_edit_text);
+		TextView textViewColorGreen = (TextView) view.findViewById(R.id.brick_show_variable_with_label_color_green_edit_text);
+		getFormulaWithBrickField(BrickField.SHOWVARIABLE_COLOR_GREEN).setTextFieldId(R.id.brick_show_variable_with_label_color_green_edit_text);
 		getFormulaWithBrickField(BrickField.SHOWVARIABLE_COLOR_GREEN).refreshTextField(view);
 		textViewColorGreen.setOnClickListener(this);
 
-		TextView textViewColorBlue = (TextView) view.findViewById(R.id.brick_show_variable_color_blue_edit_text);
-		getFormulaWithBrickField(BrickField.SHOWVARIABLE_COLOR_BLUE).setTextFieldId(R.id.brick_show_variable_color_blue_edit_text);
+		TextView textViewColorBlue = (TextView) view.findViewById(R.id.brick_show_variable_with_label_color_blue_edit_text);
+		getFormulaWithBrickField(BrickField.SHOWVARIABLE_COLOR_BLUE).setTextFieldId(R.id.brick_show_variable_with_label_color_blue_edit_text);
 		getFormulaWithBrickField(BrickField.SHOWVARIABLE_COLOR_BLUE).refreshTextField(view);
 		textViewColorBlue.setOnClickListener(this);
 
@@ -282,7 +195,7 @@ public class ShowTextBrick extends UserVariableBrick {
 
 	@Override
 	public View getPrototypeView(Context context) {
-		prototypeView = View.inflate(context, R.layout.brick_show_variable, null);
+		prototypeView = View.inflate(context, R.layout.brick_show_variable_with_label, null);
 
 		Spinner variableSpinner = (Spinner) prototypeView.findViewById(R.id.show_variable_spinner);
 		UserBrick currentBrick = ProjectManager.getInstance().getCurrentUserBrick();
@@ -297,22 +210,22 @@ public class ShowTextBrick extends UserVariableBrick {
 		variableSpinner.setAdapter(userVariableAdapterWrapper);
 		setSpinnerSelection(variableSpinner, null);
 
-		TextView textViewPositionX = (TextView) prototypeView.findViewById(R.id.brick_show_variable_edit_text_x);
+		TextView textViewPositionX = (TextView) prototypeView.findViewById(R.id.brick_show_variable_with_label_edit_text_x);
 		textViewPositionX.setText(Utils.getNumberStringForBricks(BrickValues.X_POSITION));
-		TextView textViewPositionY = (TextView) prototypeView.findViewById(R.id.brick_show_variable_edit_text_y);
+		TextView textViewPositionY = (TextView) prototypeView.findViewById(R.id.brick_show_variable_with_label_edit_text_y);
 		textViewPositionY.setText(Utils.getNumberStringForBricks(BrickValues.Y_POSITION));
 
-		TextView textViewSizeInPercent = (TextView) prototypeView.findViewById(R.id.brick_show_variable_size_edit_text);
+		TextView textViewSizeInPercent = (TextView) prototypeView.findViewById(R.id.brick_show_variable_with_label_size_edit_text);
 		textViewSizeInPercent.setText(Utils.getNumberStringForBricks(BrickValues.SHOW_VARIABLE_TEXT_SIZE));
 
 		TextView textViewColorRed = (TextView) prototypeView.findViewById(R.id
-				.brick_show_variable_color_red_edit_text);
+				.brick_show_variable_with_label_color_red_edit_text);
 		textViewColorRed.setText(String.valueOf(BrickValues.SHOW_VARIABLE_TEXT_COLOR_RED));
 		TextView textViewColorGreen = (TextView) prototypeView.findViewById(R.id
-				.brick_show_variable_color_green_edit_text);
+				.brick_show_variable_with_label_color_green_edit_text);
 		textViewColorGreen.setText(String.valueOf(BrickValues.SHOW_VARIABLE_TEXT_COLOR_GREEN));
 		TextView textViewColorBlue = (TextView) prototypeView.findViewById(R.id
-				.brick_show_variable_color_blue_edit_text);
+				.brick_show_variable_with_label_color_blue_edit_text);
 		textViewColorBlue.setText(String.valueOf(BrickValues.SHOW_VARIABLE_TEXT_COLOR_BLUE));
 
 		return prototypeView;
@@ -320,7 +233,7 @@ public class ShowTextBrick extends UserVariableBrick {
 
 	@Override
 	public Brick clone() {
-		return new ShowTextBrick(getFormulaWithBrickField(BrickField.X_POSITION).clone(),
+		return new ShowVariableWithLabelBrick(getFormulaWithBrickField(BrickField.X_POSITION).clone(),
 				getFormulaWithBrickField(BrickField.Y_POSITION).clone(),
 				getFormulaWithBrickField(BrickField.SHOWVARIABLE_SIZE).clone(),
 				getFormulaWithBrickField(BrickField.SHOWVARIABLE_COLOR_RED).clone(),
@@ -329,14 +242,11 @@ public class ShowTextBrick extends UserVariableBrick {
 	}
 
 	@Override
-	public View getCustomView(Context context, int brickId, BaseAdapter baseAdapter) {
-		return colorSeekbar.getView(context);
-	}
-
-	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		if (userVariable == null || userVariable.getName() == null) {
+		if (this.userVariable == null || this.userVariable.getName() == null) {
 			noVariableSelected(CatroidApplication.getAppContext());
+		} else {
+			showLabel = true;
 		}
 		sequence.addAction(sprite.getActionFactory().createShowVariableAction(sprite,
 				getFormulaWithBrickField(BrickField.X_POSITION),
@@ -348,26 +258,10 @@ public class ShowTextBrick extends UserVariableBrick {
 		return null;
 	}
 
-	protected void noVariableSelected(Context context) {
-		userVariable = new UserVariable("NoVariableSelected",
-				context.getString(R.string.brick_show_variable_no_variable_selected));
-		userVariable.setDummy(true);
-	}
+	private void combineVariableAndLabel () {
+		String nameAndLabel = this.userVariable.getName().toString() + " . " + userVariable.getValue().toString();
+		this.userVariable.setValue(nameAndLabel);
 
-	void setUserVariableName(UserVariable userVariable) {
-		if (userVariable.getName() != null) {
-			userVariableName = userVariable.getName();
-		} else {
-			userVariableName = Constants.NO_VARIABLE_SELECTED;
-		}
-	}
 
-	void setUserVariableName(String userVariableName) {
-		this.userVariableName = userVariableName;
-	}
-
-	@Override
-	public void updateReferenceAfterMerge(Scene into, Scene from) {
-		super.updateUserVariableReference(into, from);
 	}
 }

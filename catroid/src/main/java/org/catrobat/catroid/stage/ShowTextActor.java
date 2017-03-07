@@ -58,8 +58,10 @@ public class ShowTextActor extends Actor {
 	private UserBrick userBrick;
 	private BitmapFont font;
 
+	private boolean showLabel;
+
 	public ShowTextActor(UserVariable userVariable, int xPosition, int yPosition, int textSize, float red, float green,
-			float blue, Sprite sprite, UserBrick userBrick) {
+			float blue, Sprite sprite, UserBrick userBrick, boolean showLabel) {
 		this.variableToShow = userVariable;
 		this.variableNameToCompare = variableToShow.getName();
 		this.variableValueWithoutDecimal = null;
@@ -71,6 +73,7 @@ public class ShowTextActor extends Actor {
 		this.textColorBlue = blue;
 		this.sprite = sprite;
 		this.userBrick = userBrick;
+		this.showLabel = showLabel;
 		init();
 	}
 
@@ -98,7 +101,11 @@ public class ShowTextActor extends Actor {
 		} else {
 			for (UserVariable variable : variableList) {
 				if (variable.getName().equals(variableToShow.getName())) {
-					variableValue = variable.getValue().toString();
+					if(showLabel) {
+						variableValue = variable.getName().toString() + ": " + variable.getValue().toString();
+					} else {
+						variableValue = variable.getValue().toString();
+					}
 					if (variable.getVisible()) {
 						if (isNumberAndInteger(variableValue)) {
 							font.draw(batch, variableValueWithoutDecimal, xPosition, yPosition);
@@ -110,6 +117,10 @@ public class ShowTextActor extends Actor {
 				}
 			}
 		}
+	}
+
+	private String combineVariableNameAndValue(UserVariable userVariable) {
+		return null;
 	}
 
 	private void init() {

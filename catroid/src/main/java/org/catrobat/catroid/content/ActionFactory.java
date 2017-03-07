@@ -963,7 +963,7 @@ public class ActionFactory extends Actions {
 	}
 
 	public Action createShowVariableAction(Sprite sprite, Formula xPosition, Formula yPosition, Formula
-			textSize, Formula red, Formula green, Formula blue, UserVariable userVariable) {
+			textSize, Formula red, Formula green, Formula blue, UserVariable userVariable, boolean showLabel) {
 		ShowTextAction action = action(ShowTextAction.class);
 		action.setSprite(sprite);
 		action.setPosition(xPosition, yPosition);
@@ -974,6 +974,7 @@ public class ActionFactory extends Actions {
 		action.setVariableToShow(userVariable);
 		UserBrick userBrick = ProjectManager.getInstance().getCurrentUserBrick();
 		action.setUserBrick(userBrick);
+		action.setShowLabel(showLabel);
 		return action;
 	}
 

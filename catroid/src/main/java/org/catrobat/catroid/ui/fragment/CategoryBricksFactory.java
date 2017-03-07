@@ -134,6 +134,7 @@ import org.catrobat.catroid.content.bricks.SetXBrick;
 import org.catrobat.catroid.content.bricks.SetYBrick;
 import org.catrobat.catroid.content.bricks.ShowBrick;
 import org.catrobat.catroid.content.bricks.ShowTextBrick;
+import org.catrobat.catroid.content.bricks.ShowVariableWithLabelBrick;
 import org.catrobat.catroid.content.bricks.SpeakAndWaitBrick;
 import org.catrobat.catroid.content.bricks.SpeakBrick;
 import org.catrobat.catroid.content.bricks.StampBrick;
@@ -453,6 +454,9 @@ public class CategoryBricksFactory {
 		dataBrickList.add(new SetVariableBrick(BrickValues.SET_VARIABLE));
 		dataBrickList.add(new ChangeVariableBrick(BrickValues.CHANGE_VARIABLE));
 		dataBrickList.add(new ShowTextBrick(BrickValues.X_POSITION, BrickValues.Y_POSITION, BrickValues
+				.SHOW_VARIABLE_TEXT_SIZE, BrickValues.SHOW_VARIABLE_TEXT_COLOR_RED, BrickValues
+				.SHOW_VARIABLE_TEXT_COLOR_GREEN, BrickValues.SHOW_VARIABLE_TEXT_COLOR_BLUE));
+		dataBrickList.add(new ShowVariableWithLabelBrick(BrickValues.X_POSITION, BrickValues.Y_POSITION, BrickValues
 				.SHOW_VARIABLE_TEXT_SIZE, BrickValues.SHOW_VARIABLE_TEXT_COLOR_RED, BrickValues
 				.SHOW_VARIABLE_TEXT_COLOR_GREEN, BrickValues.SHOW_VARIABLE_TEXT_COLOR_BLUE));
 		dataBrickList.add(new HideTextBrick());
