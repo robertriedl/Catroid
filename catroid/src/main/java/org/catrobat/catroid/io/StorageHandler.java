@@ -1365,13 +1365,15 @@ public final class StorageHandler {
 		copyFiles(targetScene, targetProject, sourceScene, sourceProject, true);
 	}
 
-	private void copyFiles(String targetScene, String targetProject, String sourceScene, String sourceProject, boolean copySoundFiles) throws Exception {
+	private boolean copyFiles(String targetScene, String targetProject, String sourceScene, String sourceProject,
+			boolean copySoundFiles) throws Exception {
 		String type = IMAGE_DIRECTORY;
 		if (copySoundFiles) {
 			type = SOUND_DIRECTORY;
 		}
 
 		File sourceDirectory = new File(buildPath(buildScenePath(sourceProject, sourceScene), type));
+		File targetDirectory = new File(buildPath(buildScenePath(targetProject, targetScene), type));
 
 		if (!targetDirectory.exists() || !sourceDirectory.exists()) {
 			return false;
@@ -1392,6 +1394,7 @@ public final class StorageHandler {
 			Log.e(TAG, e.getMessage());
 			return false;
 		}
+		return true;
 	}
 
 	public void updateCodefileOnDownload(String projectName) {
